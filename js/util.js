@@ -28,6 +28,17 @@ const U = {
     for (const it of list) { r -= wfn(it); if (r <= 0) return it; }
     return list[list.length - 1];
   },
+  hash(str) {
+    let h = 2166136261;
+    for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); }
+    return h >>> 0;
+  },
+  // Round to 2 significant figures so quest targets read cleanly.
+  nice(n) {
+    if (n < 100) return Math.max(1, Math.round(n));
+    const p = Math.pow(10, Math.floor(Math.log10(n)) - 1);
+    return Math.round(n / p) * p;
+  },
   seeded(seed) {
     let s = (seed >>> 0) || 1;
     return () => {
@@ -43,9 +54,9 @@ const U = {
 const EMOJI_FONT = '"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji","Twemoji Mozilla",sans-serif';
 const _emojiCache = new Map();
 
-// variant: 0 = normal, 1 = golden, 2 = rainbow
-function emojiSprite(ch, size, variant = 0) {
-  const key = ch + '|' + size + '|' + variant;
+// tint: '' = none, 'gold' = golden variant, 'rainbow' = rainbow variant
+function emojiSprite(ch, size, tint = '') {
+  const key = ch + '|' + size + '|' + tint;
   let c = _emojiCache.get(key);
   if (c) return c;
   c = document.createElement('canvas');
@@ -56,30 +67,28 @@ function emojiSprite(ch, size, variant = 0) {
   x.textAlign = 'center';
   x.textBaseline = 'middle';
   x.fillText(ch, c.width / 2, c.height / 2 + size * 0.06);
-  if (variant > 0) {
+  if (tint) {
     x.globalCompositeOperation = 'source-atop';
-    if (variant === 1) {
-      const g = x.createLinearGradient(0, 0, c.width, c.height);
+    const g = x.createLinearGradient(0, 0, c.width, c.height);
+    if (tint === 'gold') {
       g.addColorStop(0, 'rgba(255,240,140,0.65)');
       g.addColorStop(0.5, 'rgba(255,196,30,0.55)');
       g.addColorStop(1, 'rgba(210,140,0,0.65)');
-      x.fillStyle = g;
     } else {
-      const g = x.createLinearGradient(0, 0, c.width, c.height);
       ['#ff4d4d', '#ffb84d', '#fff34d', '#4dff88', '#4dc3ff', '#b84dff'].forEach((col, i, a) =>
         g.addColorStop(i / (a.length - 1), col));
       x.globalAlpha = 0.5;
-      x.fillStyle = g;
     }
+    x.fillStyle = g;
     x.fillRect(0, 0, c.width, c.height);
   }
   _emojiCache.set(key, c);
   return c;
 }
 
-function drawEmoji(ctx, ch, x, y, size, variant = 0) {
+function drawEmoji(ctx, ch, x, y, size, tint = '') {
   const base = size > 64 ? 128 : 64;
-  const s = emojiSprite(ch, base, variant);
+  const s = emojiSprite(ch, base, tint);
   const w = s.width * (size / base);
   ctx.drawImage(s, x - w / 2, y - w / 2, w, w);
 }

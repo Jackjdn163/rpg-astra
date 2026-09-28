@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
   <title>Pet Sim Astra</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,26 +15,34 @@
   <div id="hud">
     <div id="currency">
       <div class="pill coin" id="pill-coins"><span class="ic">🪙</span><span id="coins">0</span></div>
-      <div class="pill diamond" id="pill-diamonds"><span class="ic">💎</span><span id="diamonds">0</span></div>
+      <div class="pill gem" id="pill-gems"><span class="ic">💎</span><span id="gems">0</span></div>
+      <div id="level">
+        <span id="lvl">Lv 1</span>
+        <div class="xpbar"><i id="xp-fill"></i><span id="xp-text"></span></div>
+      </div>
+      <div id="boosts"></div>
     </div>
 
     <div id="zone-banner"></div>
 
     <button id="btn-dev" aria-label="Dev panel">🛠️ Dev</button>
+    <div id="tracker" role="button" tabindex="0" aria-label="Daily quests"></div>
 
     <nav id="menu">
       <button data-open="pets"><span>🐾</span><small>Pets</small></button>
-      <button data-open="upgrades"><span>⬆️</span><small>Upgrades</small></button>
+      <button data-open="quests"><span>📜</span><small>Quests</small><b id="badge-quests" class="badge-dot hidden">0</b></button>
       <button data-open="index"><span>📖</span><small>Index</small></button>
+      <button data-open="rebirth"><span>🌀</span><small>Rebirth</small><b id="badge-rebirth" class="badge-dot hidden">!</b></button>
       <button data-open="settings"><span>⚙️</span><small>Settings</small></button>
     </nav>
 
     <div id="toggles">
-      <button id="btn-autofarm" class="hidden">🤖 Auto Farm <b>OFF</b></button>
+      <button id="btn-autofarm">🤖 Auto Farm <b>ON</b></button>
       <button id="btn-autohatch" class="hidden">♻️ Auto Hatch <b>OFF</b></button>
     </div>
 
     <button id="prompt" class="hidden"></button>
+    <div id="petbar" role="button" tabindex="0" aria-label="Equipped pets"></div>
     <div id="toasts"></div>
   </div>
 
@@ -53,6 +61,7 @@
   <script src="js/util.js"></script>
   <script src="js/data.js"></script>
   <script src="js/state.js"></script>
+  <script src="js/audio.js"></script>
   <script src="js/ui.js"></script>
   <script src="js/game.js"></script>
   <script src="js/dev.js"></script>
