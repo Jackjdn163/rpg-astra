@@ -296,6 +296,19 @@ const ui = {
     }
   },
 
+  // In-page confirmation: the first tap warns, a second tap within 4s confirms.
+  confirmTap(key, msg, kind = '') {
+    if (ui.pendingConfirm === key) {
+      ui.pendingConfirm = null;
+      return true;
+    }
+    ui.pendingConfirm = key;
+    clearTimeout(ui._confirmTimer);
+    ui._confirmTimer = setTimeout(() => { ui.pendingConfirm = null; }, 4000);
+    ui.toast(msg, kind);
+    return false;
+  },
+
   act(name, data) {
     const sel = findPet(ui.selPet);
     switch (name) {
@@ -305,7 +318,7 @@ const ui = {
         const weak = state.pets.filter(p => !isEquipped(p.uid) && (p.variant || 0) === 0 &&
           ['common', 'uncommon'].includes(PETS[p.id].rarity));
         if (!weak.length) { ui.toast('Nothing to delete'); break; }
-        if (!confirm(`Delete ${weak.length} unequipped Common/Uncommon pets?`)) break;
+        if (!ui.confirmTap('deleteWeak', `Delete ${weak.length} unequipped Common/Uncommon pets? Tap again to confirm.`)) break;
         weak.forEach(p => removePet(p.uid));
         ui.toast(`Deleted ${weak.length} pets`);
         break;
@@ -326,7 +339,7 @@ const ui = {
         break;
       }
       case 'delete':
-        if (sel && (PETS[sel.id].rarity !== 'huge' || confirm(`Really delete ${petName(sel)}?`))) {
+        if (sel && (PETS[sel.id].rarity !== 'huge' || ui.confirmTap('delete' + sel.uid, `Delete ${petName(sel)}? Tap Delete again to confirm.`))) {
           removePet(sel.uid);
           ui.selPet = null;
           game.syncPets();
@@ -350,7 +363,7 @@ const ui = {
       }
       case 'save': saveState(); ui.toast('💾 Game saved', 'good'); break;
       case 'reset':
-        if (confirm('Reset ALL progress? This cannot be undone.')) {
+        if (ui.confirmTap('reset', 'Reset ALL progress? This cannot be undone. Tap Reset again to confirm.', 'bad')) {
           resetState();
           game.resetWorld();
           ui.close();
