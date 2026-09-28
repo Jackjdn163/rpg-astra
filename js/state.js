@@ -51,13 +51,16 @@ function resetState() {
 }
 
 // ---------- Derived stats ----------
+// Dev-panel cheat multipliers (not saved).
+const DEV = { dmg: 1, speed: 1, luck: 1 };
+
 const lvl = id => state.upgrades[id] || 0;
-const dmgMult = () => 1 + 0.25 * lvl('damage');
+const dmgMult = () => (1 + 0.25 * lvl('damage')) * DEV.dmg;
 const coinMult = () => 1 + 0.2 * lvl('coins');
 const petSlots = () => 4 + lvl('slots');
-const luckMult = () => 1 + 0.15 * lvl('luck');
+const luckMult = () => (1 + 0.15 * lvl('luck')) * DEV.luck;
 const hatchCount = () => [1, 3, 8][lvl('hatch')];
-const walkSpeed = () => 270 * (1 + 0.08 * lvl('speed'));
+const walkSpeed = () => 270 * (1 + 0.08 * lvl('speed')) * DEV.speed;
 const magnetRange = () => 200 + 40 * lvl('magnet');
 
 // ---------- Pets ----------

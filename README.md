@@ -34,6 +34,7 @@ Progress saves automatically to `localStorage` every 10 seconds and when you clo
 | Pets / Upgrades | `P` / `U` |
 | Toggle auto farm | `F` |
 | Close menus | `Esc` |
+| Dev panel (give coins, gems, pets, unlock zones, cheats) | 🛠️ Dev button (top right) or `` ` `` |
 
 ## Code layout
 
@@ -44,3 +45,4 @@ Progress saves automatically to `localStorage` every 10 seconds and when you clo
 | `js/state.js` | Save data, derived stats, pet inventory, egg odds |
 | `js/ui.js` | HUD, menus, hatch animation |
 | `js/game.js` | World simulation, rendering, input, main loop |
+| `js/dev.js` | Dev panel for testing |

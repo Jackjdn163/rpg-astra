@@ -845,6 +845,12 @@ function handleWorldClick(sx, sy) {
 
 function setupInput() {
   window.addEventListener('keydown', e => {
+    // Let form fields (dev panel) receive typing without moving the player.
+    if (e.target.matches && e.target.matches('input, select, textarea')) {
+      if (e.code === 'Escape') ui.close();
+      return;
+    }
+    if (e.code === 'Backquote') { ui.toggle('dev'); return; }
     if (e.repeat && ['KeyE', 'KeyP', 'KeyU', 'KeyF'].includes(e.code)) return;
     world.keys[e.code] = true;
     if (e.code.startsWith('Arrow')) e.preventDefault();
@@ -904,7 +910,7 @@ function frame(now) {
   requestAnimationFrame(frame);
 }
 
-const game = { syncPets, hatch, resetWorld, world };
+const game = { syncPets, hatch, resetWorld, world, makeBreakable, zoneAt };
 
 function boot() {
   resize();

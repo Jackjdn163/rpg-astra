@@ -295,3 +295,28 @@ h4 { margin: 14px 0 8px; font-size: 18px; }
   .hatch-slot .egg-css { width: 64px; height: 82px; }
   .reveal .em { font-size: 40px; }
 }
+
+/* ---------- Dev panel ---------- */
+#btn-dev {
+  position: absolute; top: 14px; right: 14px; z-index: 5;
+  padding: 9px 14px; border-radius: 14px; border: 3px solid rgba(255,255,255,.2);
+  background: linear-gradient(#ff8a3d, #e0601b); box-shadow: 0 4px 0 #9c3d0a;
+  font-weight: 700; font-size: 16px;
+}
+#btn-dev:active { transform: translateY(3px); box-shadow: 0 1px 0 #9c3d0a; }
+.dev section { display: flex; flex-direction: column; gap: 8px; padding-bottom: 14px; border-bottom: 2px solid var(--line); }
+.dev section:last-child { border-bottom: none; }
+.dev h4 { margin: 12px 0 2px; }
+.dev .row { align-items: center; }
+.dev .lbl { min-width: 96px; color: var(--muted); font-weight: 600; }
+.dev input, .dev select {
+  font: inherit; color: var(--text); background: var(--panel2);
+  border: 2px solid var(--line); border-radius: 10px; padding: 8px 10px; min-width: 0;
+}
+.dev select { max-width: 100%; }
+.dev #dev-qty { width: 80px; }
+.dev #dev-amount { width: 170px; }
+.dev input:focus, .dev select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+@media (max-width: 640px) {
+  #btn-dev { font-size: 13px; padding: 7px 10px; top: 10px; right: 10px; }
+}

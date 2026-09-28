@@ -24,6 +24,7 @@ const ui = {
     $('#btn-autofarm').addEventListener('click', () => ui.toggleAutoFarm());
     $('#btn-autohatch').addEventListener('click', () => ui.toggleAutoHatch());
     $('#prompt').addEventListener('click', () => ui.runPrompt());
+    $('#btn-dev').addEventListener('click', () => ui.toggle('dev'));
     $('#hatch').addEventListener('click', () => ui.endHatch());
     ui.refreshToggles();
     ui.updateHud(true);
@@ -361,6 +362,9 @@ const ui = {
         game.syncPets();
         break;
       }
+      default:
+        if (name.startsWith('dev')) devAct(name, data);
+        break;
       case 'save': saveState(); ui.toast('💾 Game saved', 'good'); break;
       case 'reset':
         if (ui.confirmTap('reset', 'Reset ALL progress? This cannot be undone. Tap Reset again to confirm.', 'bad')) {
