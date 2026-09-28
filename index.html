@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Pet Sim Astra</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <canvas id="game"></canvas>
+
+  <div id="hud">
+    <div id="currency">
+      <div class="pill coin" id="pill-coins"><span class="ic">🪙</span><span id="coins">0</span></div>
+      <div class="pill diamond" id="pill-diamonds"><span class="ic">💎</span><span id="diamonds">0</span></div>
+    </div>
+
+    <div id="zone-banner"></div>
+
+    <nav id="menu">
+      <button data-open="pets"><span>🐾</span><small>Pets</small></button>
+      <button data-open="upgrades"><span>⬆️</span><small>Upgrades</small></button>
+      <button data-open="index"><span>📖</span><small>Index</small></button>
+      <button data-open="settings"><span>⚙️</span><small>Settings</small></button>
+    </nav>
+
+    <div id="toggles">
+      <button id="btn-autofarm" class="hidden">🤖 Auto Farm <b>OFF</b></button>
+      <button id="btn-autohatch" class="hidden">♻️ Auto Hatch <b>OFF</b></button>
+    </div>
+
+    <button id="prompt" class="hidden"></button>
+    <div id="toasts"></div>
+  </div>
+
+  <div id="modal" class="hidden">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h2 id="modal-title"></h2>
+        <button id="modal-close" aria-label="Close">✕</button>
+      </div>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <div id="hatch" class="hidden"></div>
+
+  <script src="js/util.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
